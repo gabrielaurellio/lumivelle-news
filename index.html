@@ -199,24 +199,52 @@
                   font-size: 18px; margin: 10px 0 18px; }
       .trusted .stars { color: #f5a623; letter-spacing: 2px; }
 
-      /* Quiz */
-      .quiz { background: #fbf3f6; border-radius: 12px; padding: 28px 22px; margin: 14px 0 22px; text-align: center; }
-      .quiz__progress { font-size: 13px; color: #8a7a7a; margin-bottom: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
-      .quiz__bar { height: 4px; background: var(--line); border-radius: 2px; margin-bottom: 20px; }
+      /* Quiz stage */
+      .quiz-stage { background: #fbf3f6; min-height: 100vh; min-height: 100svh;
+                    display: flex; align-items: center; justify-content: center;
+                    margin: 0 -16px; padding: 60px 16px; scroll-margin-top: var(--bar-h); }
+      .quiz-stage--done { min-height: 0; padding: 40px 16px; }
+      .quiz-inner { width: 100%; max-width: 560px; text-align: center; }
+      .quiz__label { font-family: var(--font-display); font-weight: 900; font-size: 12px;
+                     letter-spacing: .1em; text-transform: uppercase; color: var(--plum); margin-bottom: 8px; }
+      .quiz__h2 { font-family: var(--font-display); font-weight: 900; font-size: 28px; color: #3f2c2c;
+                  line-height: 1.2; margin: 0 0 24px; }
+      .quiz__progress { font-size: 13px; color: #8a7a7a; margin-bottom: 10px; font-weight: 700;
+                        text-transform: uppercase; letter-spacing: .05em; }
+      .quiz__bar { height: 4px; background: var(--line); border-radius: 2px; margin-bottom: 24px; }
       .quiz__bar-fill { height: 100%; background: var(--plum); border-radius: 2px; transition: width .3s ease; }
-      .quiz__question { font-family: var(--font-display); font-weight: 900; font-size: 20px;
-                         color: #3f2c2c; line-height: 1.3; margin-bottom: 20px; }
-      .quiz__btns { display: flex; gap: 12px; justify-content: center; }
-      .quiz__btn { flex: 1; max-width: 180px; padding: 16px 0; border: 2px solid var(--plum); border-radius: 10px;
+      .quiz__question { font-family: var(--font-display); font-weight: 900; font-size: 24px;
+                        color: #3f2c2c; line-height: 1.3; margin-bottom: 24px;
+                        transition: opacity .2s ease, transform .2s ease; }
+      .quiz__question.quiz-fade { opacity: 0; transform: translateY(8px); }
+      .quiz__btns { display: flex; flex-direction: column; gap: 12px; }
+      .quiz__btn { width: 100%; min-height: 64px; padding: 16px 0; border: 2px solid var(--plum); border-radius: 12px;
                    background: #fff; color: var(--plum); font-family: var(--font-display); font-weight: 900;
-                   font-size: 18px; cursor: pointer; transition: background .15s, color .15s; }
-      .quiz__btn:hover { background: var(--plum); color: #fff; }
+                   font-size: 20px; cursor: pointer; transition: background .15s, color .15s, transform .1s; }
+      .quiz__btn:hover { background: #faf5f8; }
+      .quiz__btn--pressed { background: var(--plum) !important; color: #fff !important; }
       .quiz__result { display: none; }
-      .quiz__result p { font-size: 18px; line-height: 1.5; margin: 0; }
-      .quiz__checking { display: none; font-size: 16px; color: #8a7a7a; padding: 20px 0; }
+      .quiz__result-check { width: 56px; height: 56px; border-radius: 50%; background: var(--green-top);
+                            display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
+      .quiz__result-check svg { width: 28px; height: 28px; }
+      .quiz__result p { font-family: var(--font-display); font-weight: 900; font-size: 20px;
+                        line-height: 1.4; color: #3f2c2c; margin: 0; }
+      .quiz__checking { display: none; }
+      .quiz__spinner { width: 32px; height: 32px; border: 3px solid var(--line); border-top-color: var(--plum);
+                       border-radius: 50%; margin: 0 auto 12px; animation: qSpin .8s linear infinite; }
+      @keyframes qSpin { to { transform: rotate(360deg); } }
+      .quiz__checking-text { font-size: 16px; color: #8a7a7a; }
+      @media(prefers-reduced-motion:reduce){ .quiz__spinner{animation:none} .quiz__question{transition:none} }
 
       /* Offer block (hidden until quiz) */
       .offer-hidden { display: none; }
+
+      @media (min-width: 900px) {
+        .quiz__h2 { font-size: 36px; }
+        .quiz__question { font-size: 30px; }
+        .quiz__btns { flex-direction: row; justify-content: center; }
+        .quiz__btn { width: auto; flex: 1; max-width: 240px; }
+      }
 
       /* Comparison table */
       .cmp-table { width: 100%; border-collapse: collapse; margin: 10px 0 22px; font-size: 16px; }
@@ -309,12 +337,19 @@
       .trust__item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #8a7a7a; font-weight: 600; }
       .trust__icon { width: 20px; height: 20px; flex-shrink: 0; color: var(--green-top); }
 
-      /* Guarantee */
-      .guarantee { background: #fbf3f6; border-radius: 12px; padding: 28px 22px; margin: 14px 0 22px; text-align: center; }
-      .guarantee__seal { width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--plum);
-                          display: flex; align-items: center; justify-content: center; margin: 0 auto 14px;
-                          font-family: var(--font-display); font-weight: 900; font-size: 14px; color: var(--plum);
-                          line-height: 1.1; text-align: center; }
+      /* Guarantee certificate */
+      .guarantee { background: #fffaf0; border: 2px solid #c9a227; outline: 1px solid #c9a227; outline-offset: 3px;
+                   border-radius: 14px; padding: 32px 22px; margin: 14px 0 22px; text-align: center;
+                   box-shadow: 0 2px 16px rgba(201,162,39,.12); }
+      .guarantee__seal { width: 140px; height: auto; margin: 0 auto 18px; }
+      .guarantee__items { display: flex; flex-direction: column; gap: 8px; margin: 18px 0 20px; }
+      .guarantee__item { display: flex; align-items: center; justify-content: center; gap: 8px;
+                         font-family: var(--font-display); font-weight: 700; font-size: 15px; color: #3b2a00; }
+      .guarantee__item svg { width: 20px; height: 20px; flex-shrink: 0; color: #c9a227; }
+      @media(min-width:900px){
+        .guarantee__seal { width: 170px; }
+        .guarantee__items { flex-direction: row; justify-content: center; gap: 24px; }
+      }
 
       /* How to start */
       .howto { counter-reset: howto; margin: 14px 0 22px; }
@@ -696,21 +731,32 @@
           </div>
         </div>
 
-        <!-- Block 9: Quiz -->
-        <h2 id="quiz">9. Three quick questions</h2>
-        <div class="quiz" id="quiz-box">
-          <div class="quiz__progress" id="quiz-progress">Question 1 of 3</div>
-          <div class="quiz__bar"><div class="quiz__bar-fill" id="quiz-bar" style="width:33%"></div></div>
-          <div class="quiz__question" id="quiz-q">Do you notice your neck or jawline more than you used to?</div>
-          <div class="quiz__btns" id="quiz-btns">
-            <button class="quiz__btn" data-answer="yes">Yes</button>
-            <button class="quiz__btn" data-answer="no">No</button>
-          </div>
-          <div class="quiz__checking" id="quiz-checking">Checking your answers...</div>
-          <div class="quiz__result" id="quiz-result">
-            <p><strong>Based on your answers, the full three-month Collagen Reset is the protocol that fits you.</strong></p>
-          </div>
+        <!-- Block 9: Quiz (full-screen stage) -->
+      </div>
+    </article>
+    <section class="quiz-stage" id="quiz-stage">
+      <div class="quiz-inner" id="quiz-box">
+        <div class="quiz__label">3 QUICK QUESTIONS &middot; 10 SECONDS</div>
+        <h2 class="quiz__h2" id="quiz">Let's see which protocol fits you</h2>
+        <div class="quiz__progress" id="quiz-progress">Question 1 of 3</div>
+        <div class="quiz__bar"><div class="quiz__bar-fill" id="quiz-bar" style="width:33%"></div></div>
+        <div class="quiz__question" id="quiz-q">Do you notice your neck or jawline more than you used to?</div>
+        <div class="quiz__btns" id="quiz-btns">
+          <button class="quiz__btn" data-answer="yes">Yes</button>
+          <button class="quiz__btn" data-answer="no">No</button>
         </div>
+        <div class="quiz__checking" id="quiz-checking">
+          <div class="quiz__spinner"></div>
+          <div class="quiz__checking-text">Checking your answers...</div>
+        </div>
+        <div class="quiz__result" id="quiz-result">
+          <div class="quiz__result-check"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><polyline points="4 12 10 18 20 6"/></svg></div>
+          <p>Based on your answers, the full three-month Collagen Reset is the protocol that fits you.</p>
+        </div>
+      </div>
+    </section>
+    <article class="article">
+      <div class="wrap">
 
         <!-- Block 10: Offer (hidden until quiz completes) -->
         <div id="offer-block">
@@ -823,16 +869,48 @@
         </div>
 
         <!-- Block 11: Guarantee (always visible) -->
-        <h2>11. The "Woman in the Mirror" Guarantee</h2>
         <div class="guarantee">
-          <div class="guarantee__seal">90<br>DAYS</div>
-          <p>Take it for 90 days. If the woman in the mirror doesn't look firmer, if the pinch doesn't snap back, if you simply change your mind, you get every cent back. <strong>And you keep the bottles.</strong></p>
+          <!-- Golden seal SVG -->
+          <svg class="guarantee__seal" viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="gld" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f6d365"/><stop offset="100%" stop-color="#c9a227"/></linearGradient>
+              <linearGradient id="gld2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f6d365"/><stop offset="100%" stop-color="#d4a82a"/></linearGradient>
+              <path id="arcTop" d="M 40 100 A 60 60 0 0 1 160 100"/>
+              <path id="arcBot" d="M 160 108 A 60 60 0 0 1 40 108"/>
+            </defs>
+            <!-- Ribbons -->
+            <polygon points="72,155 62,210 80,195 98,215 92,155" fill="url(#gld)" opacity=".85"/>
+            <polygon points="128,155 138,210 120,195 102,215 108,155" fill="url(#gld)" opacity=".85"/>
+            <!-- Starburst -->
+            <g transform="translate(100,100)">
+              <polygon fill="url(#gld)" points="0,-88 10,-72 24,-82 28,-64 44,-68 42,-50 58,-48 50,-32 64,-24 52,-12 62,2 46,8 52,24 36,24 36,40 20,34 16,50 2,40 -12,52 -18,36 -34,42 -34,26 -50,26 -44,12 -58,4 -46,-8 -56,-22 -42,-28 -46,-44 -32,-44 -30,-60 -18,-54 -10,-68 0,-56 10,-68 18,-54 30,-60 32,-44 46,-44 42,-28 56,-22 46,-8 58,4 44,12 50,26 34,26 34,42 18,36 16,50 -2,40 -12,52 -18,36 -34,42 -34,26 -50,26 -44,12 -58,4 -46,-8 -56,-22 -42,-28 -46,-44 -32,-44 -30,-60 -18,-54 -10,-68"/>
+              <circle r="62" fill="none" stroke="#f6d365" stroke-width="3" opacity=".5"/>
+              <circle r="56" fill="#fffcf0"/>
+            </g>
+            <!-- Text arcs -->
+            <text font-family="Inter Tight,sans-serif" font-weight="900" font-size="11" fill="#3b2a00" letter-spacing="3">
+              <textPath href="#arcTop" startOffset="50%" text-anchor="middle">MONEY-BACK</textPath>
+            </text>
+            <text font-family="Inter Tight,sans-serif" font-weight="900" font-size="11" fill="#3b2a00" letter-spacing="3">
+              <textPath href="#arcBot" startOffset="50%" text-anchor="middle">GUARANTEE</textPath>
+            </text>
+            <!-- Center text -->
+            <text x="100" y="92" text-anchor="middle" font-family="Inter Tight,sans-serif" font-weight="900" font-size="38" fill="#3b2a00">90</text>
+            <text x="100" y="116" text-anchor="middle" font-family="Inter Tight,sans-serif" font-weight="900" font-size="16" fill="#3b2a00" letter-spacing="3">DAY</text>
+          </svg>
+          <h2 style="font-size:24px;margin:0 0 14px">The "Woman in the Mirror" Guarantee</h2>
+          <p>Take it for 90 days. If the woman in the mirror doesn't look firmer, if the pinch doesn't snap back, if you simply change your mind, you get every cent back. <strong style="font-size:20px">And you keep the bottles.</strong></p>
           <p style="margin-top:12px">That's what made me order. I had a drawer full of creams nobody ever offered to refund.</p>
-        </div>
-        <!-- Button 3: checkout -->
-        <div class="vsl-cta">
-          <a class="vsl-cta__button buylink" data-sentinel-checkout
-             href="https://order.wealthpay.io/qo52qotcz7vr?hid=b2lkPW9mZl82NDcxMDc5JmFpZD1hZmZfODUwMDQzMiZ1aWQ9YmxfODY3NTQxMQ%3D%3D&affid=aff_8500432">TRY LUMIVELLE RISK-FREE FOR 90 DAYS &rarr;</a>
+          <div class="guarantee__items">
+            <div class="guarantee__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="4 12 10 18 20 6"/></svg>90 full days to decide</div>
+            <div class="guarantee__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="4 12 10 18 20 6"/></svg>Every cent back</div>
+            <div class="guarantee__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="4 12 10 18 20 6"/></svg>You keep the bottles</div>
+          </div>
+          <!-- Button 3: checkout (inside card) -->
+          <a class="pdp-buy buylink" data-sentinel-checkout
+             href="https://order.wealthpay.io/qo52qotcz7vr?hid=b2lkPW9mZl82NDcxMDc5JmFpZD1hZmZfODUwMDQzMiZ1aWQ9YmxfODY3NTQxMQ%3D%3D&affid=aff_8500432" style="margin-top:16px">
+            <div class="pdp-buy__main">TRY LUMIVELLE RISK-FREE FOR 90 DAYS &rarr;</div>
+          </a>
         </div>
 
         <!-- Block 12: How to start (always visible) -->
@@ -976,6 +1054,7 @@
       var qIdx = 0;
       var quizDone = false;
       var offerBlock = document.getElementById('offer-block');
+      var quizStage = document.getElementById('quiz-stage');
       var quizBox = document.getElementById('quiz-box');
       var quizQ = document.getElementById('quiz-q');
       var quizProg = document.getElementById('quiz-progress');
@@ -983,46 +1062,58 @@
       var quizBtns = document.getElementById('quiz-btns');
       var quizChecking = document.getElementById('quiz-checking');
       var quizResult = document.getElementById('quiz-result');
+      var quizLabel = quizBox.querySelector('.quiz__label');
+      var quizH2 = quizBox.querySelector('.quiz__h2');
 
-      /* Hide offer block by JS (noscript: visible) */
       try {
         var stored = sessionStorage.getItem('lv_quiz_done');
         if (stored === '1') { quizDone = true; }
       } catch(e) {}
 
-      if (!quizDone) {
-        offerBlock.classList.add('offer-hidden');
-      } else {
+      function collapseQuiz() {
+        quizStage.classList.add('quiz-stage--done');
         quizBtns.style.display = 'none';
         quizQ.style.display = 'none';
         quizProg.style.display = 'none';
         quizBar.parentElement.style.display = 'none';
         quizChecking.style.display = 'none';
+        if (quizLabel) quizLabel.style.display = 'none';
+        if (quizH2) quizH2.style.display = 'none';
         quizResult.style.display = 'block';
+      }
+
+      if (!quizDone) {
+        offerBlock.classList.add('offer-hidden');
+      } else {
+        collapseQuiz();
       }
 
       function advanceQuiz() {
         qIdx++;
         if (qIdx < questions.length) {
-          quizQ.textContent = questions[qIdx];
-          quizProg.textContent = "Question " + (qIdx + 1) + " of 3";
-          quizBar.style.width = ((qIdx + 1) / 3 * 100) + '%';
+          quizQ.classList.add('quiz-fade');
+          setTimeout(function() {
+            quizQ.textContent = questions[qIdx];
+            quizProg.textContent = "Question " + (qIdx + 1) + " of 3";
+            quizBar.style.width = ((qIdx + 1) / 3 * 100) + '%';
+            quizQ.classList.remove('quiz-fade');
+          }, 200);
         } else {
-          /* Done */
           quizBtns.style.display = 'none';
           quizQ.style.display = 'none';
           quizProg.style.display = 'none';
           quizBar.parentElement.style.display = 'none';
+          if (quizLabel) quizLabel.style.display = 'none';
+          if (quizH2) quizH2.style.display = 'none';
           quizChecking.style.display = 'block';
           setTimeout(function() {
             quizChecking.style.display = 'none';
             quizResult.style.display = 'block';
+            quizStage.classList.add('quiz-stage--done');
             offerBlock.classList.remove('offer-hidden');
             quizDone = true;
             try { sessionStorage.setItem('lv_quiz_done', '1'); } catch(e) {}
-            /* Fire pixel event */
             if (typeof fbq === 'function') fbq('trackCustom', 'QuizComplete');
-            /* Scroll to offer */
             setTimeout(function() {
               offerBlock.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }, 200);
@@ -1031,7 +1122,13 @@
       }
 
       quizBtns.addEventListener('click', function(e) {
-        if (e.target.dataset.answer) advanceQuiz();
+        var btn = e.target;
+        if (!btn.dataset.answer) return;
+        btn.classList.add('quiz__btn--pressed');
+        setTimeout(function() {
+          btn.classList.remove('quiz__btn--pressed');
+          advanceQuiz();
+        }, 200);
       });
 
       /* -- Offer bar -- */
@@ -1054,7 +1151,7 @@
       }
 
       offerbarBtn.addEventListener('click', function() {
-        var target = quizDone ? offerBlock : document.getElementById('quiz');
+        var target = quizDone ? offerBlock : quizStage;
         if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
 
@@ -1084,8 +1181,7 @@
       if (btnQuiz) {
         btnQuiz.addEventListener('click', function(e) {
           e.preventDefault();
-          var q = document.getElementById('quiz');
-          if (q) q.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          if (quizStage) quizStage.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
       }
     })();
