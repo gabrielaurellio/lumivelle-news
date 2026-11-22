@@ -255,19 +255,20 @@
       .cmp-table tr.highlight-row td { color: var(--plum); font-family: var(--font-display); font-weight: 900; }
 
       /* PDP offer card */
+      .pdp-wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 16px; }
       .bf-banner { background: #111; color: #fff; text-align: center; font-family: var(--font-display);
                    font-weight: 900; font-size: 14px; letter-spacing: .08em; text-transform: uppercase;
                    padding: 10px 16px; border-radius: 8px; margin: 18px 0 16px; }
       .bf-banner .bf-off { color: #ff3b3b; }
       .pdp { background: #fff; border: 1px solid #e8dde3; border-radius: 14px;
-             box-shadow: 0 2px 12px rgba(0,0,0,.06); overflow: hidden; margin: 0 0 22px; }
+             box-shadow: 0 2px 12px rgba(0,0,0,.06); margin: 0 0 22px; }
       .pdp__inner { display: flex; flex-direction: column; }
       .pdp__img { position: relative; background: #f7f1f4; display: flex; align-items: center; justify-content: center; padding: 20px; }
-      .pdp__img img { width: 100%; max-width: 320px; height: auto; border-radius: 10px; }
+      .pdp__img img { width: 100%; height: auto; border-radius: 16px; aspect-ratio: 1/1; }
       .pdp__badge { position: absolute; top: 12px; right: 12px; width: 56px; height: 56px; border-radius: 50%;
                     background: #ff3b3b; color: #fff; font-family: var(--font-display); font-weight: 900;
                     font-size: 12px; display: flex; align-items: center; justify-content: center;
-                    text-align: center; line-height: 1.1; }
+                    text-align: center; line-height: 1.1; z-index: 2; }
       .pdp__content { padding: 20px; }
       .pdp__stars { color: #f5a623; font-size: 18px; letter-spacing: 2px; }
       .pdp__stars span { color: #8a7a7a; font-size: 14px; letter-spacing: 0; margin-left: 6px;
@@ -341,13 +342,14 @@
       .guarantee { background: #fffaf0; border: 2px solid #c9a227; outline: 1px solid #c9a227; outline-offset: 3px;
                    border-radius: 14px; padding: 32px 22px; margin: 14px 0 22px; text-align: center;
                    box-shadow: 0 2px 16px rgba(201,162,39,.12); }
-      .guarantee__seal { width: 140px; height: auto; margin: 0 auto 18px; }
+      .guarantee__seal { width: 150px; height: 150px; margin: 0 auto 18px; filter: drop-shadow(0 6px 14px rgba(0,0,0,.18)); }
       .guarantee__items { display: flex; flex-direction: column; gap: 8px; margin: 18px 0 20px; }
       .guarantee__item { display: flex; align-items: center; justify-content: center; gap: 8px;
                          font-family: var(--font-display); font-weight: 700; font-size: 15px; color: #3b2a00; }
       .guarantee__item svg { width: 20px; height: 20px; flex-shrink: 0; color: #c9a227; }
+      .pdp__confirm-seal { width: 44px; height: 44px; vertical-align: middle; margin-right: 6px; filter: drop-shadow(0 3px 6px rgba(0,0,0,.12)); }
       @media(min-width:900px){
-        .guarantee__seal { width: 170px; }
+        .guarantee__seal { width: 190px; height: 190px; }
         .guarantee__items { flex-direction: row; justify-content: center; gap: 24px; }
       }
 
@@ -415,9 +417,11 @@
         .review { flex: 1; }
         .paths { flex-direction: row; }
         .path { flex: 1; }
-        .pdp__inner { flex-direction: row; }
-        .pdp__img { width: 45%; }
-        .pdp__content { width: 55%; }
+        .pdp-wrap { max-width: 1120px; }
+        .pdp__inner { flex-direction: row; gap: 40px; }
+        .pdp__img { width: 50%; position: sticky; top: calc(var(--bar-h) + 24px); align-self: start;
+                    border-radius: 16px; }
+        .pdp__content { width: 50%; }
         .pkg-line__img { height: 76px; }
         .trust { grid-template-columns: 1fr 1fr 1fr 1fr; }
         .stages { flex-direction: row; }
@@ -771,7 +775,11 @@
               <tr class="highlight-row"><td><strong>LumiVelle, full protocol</strong></td><td><strong>$99 for three months</strong></td></tr>
             </tbody>
           </table>
+        </div>
+      </div>
 
+      <!-- PDP wide container (breaks out of .wrap for wider desktop layout) -->
+      <div class="pdp-wrap" id="pdp-wide">
           <!-- B. Black Friday banner -->
           <div class="bf-banner">BLACK FRIDAY SALE &middot; <span class="bf-off">UP TO 78% OFF</span> &middot; FREE SHIPPING</div>
 
@@ -780,7 +788,7 @@
             <div class="pdp__inner">
               <!-- C1. Product image -->
               <div class="pdp__img">
-                <img src="img/bottle.webp" alt="LumiVelle gummies" width="900" height="900" loading="lazy">
+                <img src="img/pdp-hero.webp" alt="LumiVelle Advanced Skin Renewal Gummies" width="1000" height="1000" loading="lazy">
                 <span class="pdp__badge">78%<br>OFF</span>
               </div>
               <!-- C2-C9. Content -->
@@ -852,7 +860,7 @@
                 <a class="pdp-buy pdp-buy-pulse buylink" id="pdp-btn" data-sentinel-checkout
                    href="https://order.wealthpay.io/qo52qotcz7vr?hid=b2lkPW9mZl82NDcxMDc5JmFpZD1hZmZfODUwMDQzMiZ1aWQ9YmxfODY3NTQxMQ%3D%3D&affid=aff_8500432">
                   <div class="pdp-buy__main" id="pdp-btn-main">GET MY 3 BOTTLES &middot; $99 <span class="old">$447</span></div>
-                  <div class="pdp-buy__sub">90-Day Money-Back Guarantee &middot; Free Shipping</div>
+                  <div class="pdp-buy__sub"><img src="img/seal-90.webp" class="pdp__confirm-seal" alt="" width="44" height="44">90-Day Money-Back Guarantee &middot; Free Shipping</div>
                 </a>
                 <!-- C8. Confirm text -->
                 <p class="pdp__confirm">You'll confirm your package on the secure checkout page.</p>
@@ -866,38 +874,13 @@
               </div>
             </div>
           </div>
-        </div>
+      </div>
+
+      <div class="wrap">
 
         <!-- Block 11: Guarantee (always visible) -->
         <div class="guarantee">
-          <!-- Golden seal SVG -->
-          <svg class="guarantee__seal" viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="gld" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f6d365"/><stop offset="100%" stop-color="#c9a227"/></linearGradient>
-              <linearGradient id="gld2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f6d365"/><stop offset="100%" stop-color="#d4a82a"/></linearGradient>
-              <path id="arcTop" d="M 40 100 A 60 60 0 0 1 160 100"/>
-              <path id="arcBot" d="M 160 108 A 60 60 0 0 1 40 108"/>
-            </defs>
-            <!-- Ribbons -->
-            <polygon points="72,155 62,210 80,195 98,215 92,155" fill="url(#gld)" opacity=".85"/>
-            <polygon points="128,155 138,210 120,195 102,215 108,155" fill="url(#gld)" opacity=".85"/>
-            <!-- Starburst -->
-            <g transform="translate(100,100)">
-              <polygon fill="url(#gld)" points="0,-88 10,-72 24,-82 28,-64 44,-68 42,-50 58,-48 50,-32 64,-24 52,-12 62,2 46,8 52,24 36,24 36,40 20,34 16,50 2,40 -12,52 -18,36 -34,42 -34,26 -50,26 -44,12 -58,4 -46,-8 -56,-22 -42,-28 -46,-44 -32,-44 -30,-60 -18,-54 -10,-68 0,-56 10,-68 18,-54 30,-60 32,-44 46,-44 42,-28 56,-22 46,-8 58,4 44,12 50,26 34,26 34,42 18,36 16,50 -2,40 -12,52 -18,36 -34,42 -34,26 -50,26 -44,12 -58,4 -46,-8 -56,-22 -42,-28 -46,-44 -32,-44 -30,-60 -18,-54 -10,-68"/>
-              <circle r="62" fill="none" stroke="#f6d365" stroke-width="3" opacity=".5"/>
-              <circle r="56" fill="#fffcf0"/>
-            </g>
-            <!-- Text arcs -->
-            <text font-family="Inter Tight,sans-serif" font-weight="900" font-size="11" fill="#3b2a00" letter-spacing="3">
-              <textPath href="#arcTop" startOffset="50%" text-anchor="middle">MONEY-BACK</textPath>
-            </text>
-            <text font-family="Inter Tight,sans-serif" font-weight="900" font-size="11" fill="#3b2a00" letter-spacing="3">
-              <textPath href="#arcBot" startOffset="50%" text-anchor="middle">GUARANTEE</textPath>
-            </text>
-            <!-- Center text -->
-            <text x="100" y="92" text-anchor="middle" font-family="Inter Tight,sans-serif" font-weight="900" font-size="38" fill="#3b2a00">90</text>
-            <text x="100" y="116" text-anchor="middle" font-family="Inter Tight,sans-serif" font-weight="900" font-size="16" fill="#3b2a00" letter-spacing="3">DAY</text>
-          </svg>
+          <img class="guarantee__seal" src="img/seal-90.webp" width="420" height="420" loading="lazy" alt="90 days money back guarantee">
           <h2 style="font-size:24px;margin:0 0 14px">The "Woman in the Mirror" Guarantee</h2>
           <p>Take it for 90 days. If the woman in the mirror doesn't look firmer, if the pinch doesn't snap back, if you simply change your mind, you get every cent back. <strong style="font-size:20px">And you keep the bottles.</strong></p>
           <p style="margin-top:12px">That's what made me order. I had a drawer full of creams nobody ever offered to refund.</p>
@@ -1054,6 +1037,7 @@
       var qIdx = 0;
       var quizDone = false;
       var offerBlock = document.getElementById('offer-block');
+      var pdpWide = document.getElementById('pdp-wide');
       var quizStage = document.getElementById('quiz-stage');
       var quizBox = document.getElementById('quiz-box');
       var quizQ = document.getElementById('quiz-q');
@@ -1084,6 +1068,7 @@
 
       if (!quizDone) {
         offerBlock.classList.add('offer-hidden');
+        if (pdpWide) pdpWide.classList.add('offer-hidden');
       } else {
         collapseQuiz();
       }
@@ -1111,6 +1096,7 @@
             quizResult.style.display = 'block';
             quizStage.classList.add('quiz-stage--done');
             offerBlock.classList.remove('offer-hidden');
+            if (pdpWide) pdpWide.classList.remove('offer-hidden');
             quizDone = true;
             try { sessionStorage.setItem('lv_quiz_done', '1'); } catch(e) {}
             if (typeof fbq === 'function') fbq('trackCustom', 'QuizComplete');
