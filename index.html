@@ -284,6 +284,13 @@
 
       .foot { text-align: center; font-size: 12px; color: #a39494; padding: 18px 16px 28px; line-height: 1.6; }
 
+      /* Package bottles */
+      .package__img { display: flex; justify-content: center; align-items: flex-end; margin: 8px 0 4px; height: 100px; }
+      .package__img img { width: 70px; height: auto; display: block; }
+      .package__img--3 img:nth-child(2) { margin-left: -18px; }
+      .package__img--3 img:nth-child(3) { margin-left: -18px; }
+      .package__img--2 img:nth-child(2) { margin-left: -18px; }
+
       /* Bonuses list */
       .bonuses { list-style: none; margin: 10px 0 18px; }
       .bonuses li { padding: 6px 0 6px 24px; position: relative; font-style: italic; }
@@ -565,11 +572,10 @@
         <p>I tried to make it. Twice.</p>
         <p>The Jeju gelatin isn't on any shelf here. PDRN isn't something you pick up at a pharmacy. And with everything on my counter, I still got the amounts wrong.</p>
         <p>She says it in the interview: her patients kept asking where to buy the ingredients, and most gave up before the second week. And pills and powders weren't an option, because the heat and pressure used to make them damage the collagen. So her team put all four, in the amounts she uses, into a small pink gummy.</p>
-        <p>It's called <strong>LumiVelle</strong>. One a day. No bowl, no measuring, no needle.</p>
-        <div class="placeholder" id="img-bottle">
-          <img src="img/bottle.webp" alt="LumiVelle bottle with pink gummies" width="400" height="400" loading="lazy"
-               onerror="this.style.display='none'">
-        </div>
+        <p>It's called <strong>LumiVelle</strong>. Two a day. No bowl, no measuring, no needle.</p>
+        <figure class="fig">
+          <img src="img/bottle.webp" alt="LumiVelle gummies" width="900" height="900" loading="lazy">
+        </figure>
 
         <!-- Button 1: scroll to quiz -->
         <div class="vsl-cta">
@@ -658,16 +664,28 @@
           <div class="packages">
             <div class="package package--best">
               <span class="package__badge">BEST VALUE</span>
+              <div class="package__img package__img--3">
+                <img src="img/bottle-pack.webp" alt="LumiVelle bottle" width="700" height="700" loading="lazy">
+                <img src="img/bottle-pack.webp" alt="" width="700" height="700" loading="lazy">
+                <img src="img/bottle-pack.webp" alt="" width="700" height="700" loading="lazy">
+              </div>
               <h3>3 Bottles</h3>
               <div class="price">$99</div>
               <div class="per">$33 a bottle &middot; The full three-month protocol. The one she recommends.</div>
             </div>
             <div class="package">
+              <div class="package__img package__img--2">
+                <img src="img/bottle-pack.webp" alt="LumiVelle bottle" width="700" height="700" loading="lazy">
+                <img src="img/bottle-pack.webp" alt="" width="700" height="700" loading="lazy">
+              </div>
               <h3>2 Bottles</h3>
               <div class="price">$89</div>
               <div class="per">$44.50 a bottle</div>
             </div>
             <div class="package">
+              <div class="package__img">
+                <img src="img/bottle-pack.webp" alt="LumiVelle bottle" width="700" height="700" loading="lazy">
+              </div>
               <h3>1 Bottle</h3>
               <div class="price">$79</div>
               <div class="per">$79 a bottle</div>
@@ -707,7 +725,7 @@
         <div class="howto">
           <div class="howto__step"><strong>Order today.</strong> Shipping is free, in plain packaging.</div>
           <div class="howto__step"><strong>Take a photo before your first gummy.</strong> Face and neck, no filter, by a window. In a few weeks, that photo is what will make you stop and say, "oh."</div>
-          <div class="howto__step"><strong>One gummy a day.</strong> That's the whole routine.</div>
+          <div class="howto__step"><strong>Two gummies a day.</strong> That's the whole routine.</div>
         </div>
         <figure class="fig">
           <video class="lazy-video" loop muted playsinline preload="none"
