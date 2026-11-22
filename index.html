@@ -430,9 +430,11 @@
         .pdp__img { width: 50%; position: sticky; top: calc(var(--bar-h) + 24px); align-self: start;
                     border-radius: 16px; }
         .pdp__content { width: 50%; }
-        .pkg-line { grid-template-columns: 76px minmax(0,1fr) auto; column-gap: 16px; }
-        .pkg-line__img { width: 76px; }
-        .pkg-line__save { grid-column: 2 / -1; text-align: right; margin-top: 0; padding-top: 0; border-top: 0; }
+        .pkg-line { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+        .pkg-line__img { width: 76px; flex-shrink: 0; }
+        .pkg-line__info { flex: 1; min-width: 0; }
+        .pkg-line__price { text-align: right; flex-shrink: 0; }
+        .pkg-line__save { width: 100%; margin-top: 0; padding-top: 0; border-top: 0; text-align: right; }
         .trust { grid-template-columns: 1fr 1fr 1fr 1fr; }
         .stages { flex-direction: row; }
         .stage { flex: 1; }
