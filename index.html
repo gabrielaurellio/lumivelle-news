@@ -40,6 +40,8 @@
         --bar-h: 44px;
       }
       *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { overflow-x: clip; }
+      body { max-width: 100%; }
       html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
       body { background: var(--paper); color: var(--cocoa); font-family: var(--font-body); line-height: 1.55; font-size: 18px; }
       img { display: block; max-width: 100%; height: auto; }
@@ -202,7 +204,7 @@
       /* Quiz stage */
       .quiz-stage { background: #fbf3f6; min-height: 100vh; min-height: 100svh;
                     display: flex; align-items: center; justify-content: center;
-                    margin: 0 -16px; padding: 60px 16px; scroll-margin-top: var(--bar-h); }
+                    width: 100%; padding: 60px 16px; scroll-margin-top: var(--bar-h); }
       .quiz-stage--done { min-height: 0; padding: 40px 16px; }
       .quiz-inner { width: 100%; max-width: 560px; text-align: center; }
       .quiz__label { font-family: var(--font-display); font-weight: 900; font-size: 12px;
@@ -247,7 +249,7 @@
       }
 
       /* Comparison table */
-      .cmp-table { width: 100%; border-collapse: collapse; margin: 10px 0 22px; font-size: 16px; }
+      .cmp-table { width: 100%; border-collapse: collapse; margin: 10px 0 22px; font-size: 16px; table-layout: fixed; word-wrap: break-word; }
       .cmp-table th, .cmp-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--line); }
       .cmp-table th { font-family: var(--font-display); font-weight: 900; color: #3f2c2c; }
       .cmp-table td:last-child { text-align: right; font-weight: 700; }
@@ -255,10 +257,10 @@
       .cmp-table tr.highlight-row td { color: var(--plum); font-family: var(--font-display); font-weight: 900; }
 
       /* PDP offer card */
-      .pdp-wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 16px; }
+      .pdp-wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 16px; width: 100%; }
       .bf-banner { background: #111; color: #fff; text-align: center; font-family: var(--font-display);
                    font-weight: 900; font-size: 14px; letter-spacing: .08em; text-transform: uppercase;
-                   padding: 10px 16px; border-radius: 8px; margin: 18px 0 16px; }
+                   padding: 10px 16px; border-radius: 8px; margin: 18px 0 16px; overflow-wrap: break-word; word-break: break-word; }
       .bf-banner .bf-off { color: #ff3b3b; }
       .pdp { background: #fff; border: 1px solid #e8dde3; border-radius: 14px;
              box-shadow: 0 2px 12px rgba(0,0,0,.06); margin: 0 0 22px; }
@@ -285,26 +287,32 @@
 
       /* Package selector */
       .pkg-selector { margin: 0 0 16px; }
-      .pkg-line { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 2px solid var(--line);
-                  border-radius: 10px; margin-bottom: 8px; cursor: pointer; position: relative; min-height: 56px;
+      .pkg-line { display: grid; grid-template-columns: 64px minmax(0,1fr) auto; column-gap: 12px;
+                  align-items: center; padding: 18px 12px 10px; border: 2px solid var(--line);
+                  border-radius: 10px; margin-bottom: 8px; cursor: pointer; position: relative;
                   transition: border-color .15s, background .15s; }
       .pkg-line:last-child { margin-bottom: 0; }
-      .pkg-line input { position: absolute; opacity: 0; width: 0; height: 0; }
+      .pkg-line input { position: absolute; opacity: 0; width: 0; height: 0; display: none; }
       .pkg-line--active { border-color: var(--plum); background: #faf5f8; }
-      .pkg-line__img { flex-shrink: 0; height: 64px; width: auto; }
-      .pkg-line__img img { height: 100%; width: auto; display: block; }
-      .pkg-line__info { flex: 1; min-width: 0; }
-      .pkg-line__name { font-family: var(--font-display); font-weight: 900; font-size: 16px; color: #3f2c2c; }
-      .pkg-line__tag { font-size: 12px; color: #8a7a7a; }
-      .pkg-line__price { text-align: right; flex-shrink: 0; }
+      .pkg-line__img { width: 64px; height: auto; }
+      .pkg-line__img img { width: 100%; height: auto; display: block; }
+      .pkg-line__info { min-width: 0; }
+      .pkg-line__name { font-family: var(--font-display); font-weight: 900; font-size: 18px; color: #3f2c2c; white-space: nowrap; }
+      .pkg-line__tag { font-size: 13px; color: #8a7a7a; white-space: nowrap; }
+      .pkg-line__price { text-align: right; }
       .pkg-line__now { font-family: var(--font-display); font-weight: 900; font-size: 22px; color: #3f2c2c; }
       .pkg-line__was { font-size: 13px; color: #8a7a7a; text-decoration: line-through; }
-      .pkg-line__save { font-size: 12px; color: var(--green-top); font-weight: 700; margin-top: 2px; }
+      .pkg-line__save { grid-column: 1 / -1; font-size: 13px; color: var(--green-top); font-weight: 700;
+                        margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line); white-space: nowrap; }
       .pkg-seal { position: absolute; top: -10px; right: 10px; font-size: 10px; font-weight: 900;
                   text-transform: uppercase; letter-spacing: .06em; padding: 3px 10px; border-radius: 20px;
-                  color: #fff; }
+                  color: #fff; z-index: 1; }
       .pkg-seal--best { background: var(--plum); }
       .pkg-seal--pop { background: #b3122f; }
+      @media (max-width: 359px) {
+        .pkg-line__tag { font-size: 12px; }
+        .pkg-line__save { font-size: 12px; }
+      }
 
       /* PDP bonus box */
       .pdp-bonus { border: 2px dashed var(--plum); border-radius: 10px; padding: 16px; margin: 0 0 16px;
@@ -422,7 +430,9 @@
         .pdp__img { width: 50%; position: sticky; top: calc(var(--bar-h) + 24px); align-self: start;
                     border-radius: 16px; }
         .pdp__content { width: 50%; }
-        .pkg-line__img { height: 76px; }
+        .pkg-line { grid-template-columns: 76px minmax(0,1fr) auto; column-gap: 16px; }
+        .pkg-line__img { width: 76px; }
+        .pkg-line__save { grid-column: 2 / -1; text-align: right; margin-top: 0; padding-top: 0; border-top: 0; }
         .trust { grid-template-columns: 1fr 1fr 1fr 1fr; }
         .stages { flex-direction: row; }
         .stage { flex: 1; }
@@ -818,8 +828,8 @@
                     <div class="pkg-line__price">
                       <div class="pkg-line__now">$99</div>
                       <div class="pkg-line__was">$447</div>
-                      <div class="pkg-line__save">Save $348 &middot; 78% OFF &middot; $33/bottle</div>
                     </div>
+                    <div class="pkg-line__save">Save $348 &middot; 78% OFF &middot; $33/bottle</div>
                   </label>
                   <label class="pkg-line">
                     <input type="radio" name="pkg" value="2">
@@ -831,8 +841,8 @@
                     <div class="pkg-line__price">
                       <div class="pkg-line__now">$89</div>
                       <div class="pkg-line__was">$298</div>
-                      <div class="pkg-line__save">Save $209 &middot; 70% OFF &middot; $44.50/bottle</div>
                     </div>
+                    <div class="pkg-line__save">Save $209 &middot; 70% OFF &middot; $44.50/bottle</div>
                   </label>
                   <label class="pkg-line">
                     <input type="radio" name="pkg" value="1">
@@ -843,7 +853,8 @@
                     <div class="pkg-line__price">
                       <div class="pkg-line__now">$79</div>
                       <div class="pkg-line__was">$149</div>
-                      <div class="pkg-line__save">Save $70 &middot; 47% OFF</div>
+                    </div>
+                    <div class="pkg-line__save">Save $70 &middot; 47% OFF</div>
                     </div>
                   </label>
                 </div>
