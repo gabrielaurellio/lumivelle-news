@@ -1245,6 +1245,81 @@
         });
       }
     })();
+
+    /* -- Microsoft Clarity (deferred load) -- */
+    (function(c,l,a,r,i){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      function boot(){
+        if(c.__clarityLoaded) return; c.__clarityLoaded=1;
+        var t=l.createElement(r); t.async=1; t.src="https://www.clarity.ms/tag/"+i;
+        var y=l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t,y);
+      }
+      function later(){ if('requestIdleCallback' in c){ requestIdleCallback(boot,{timeout:3000}); } else { setTimeout(boot,1500); } }
+      if(l.readyState==='complete'){ later(); } else { c.addEventListener('load', later); }
+    })(window, document, "clarity", "script", "vn07o696fv");
+
+    /* -- Clarity funnel: block views + actions -- */
+    (function(){
+      var _cf={};
+      function ce(n){ if(_cf[n]) return; _cf[n]=1; try{ window.clarity("event",n); }catch(e){} }
+
+      /* Block-view tracking (single IntersectionObserver, threshold 0.3, fires once) */
+      var _tgt=[];
+      var _h2map={"1.":"view_01_story","2.":"view_02_drawer","3.":"view_03_interview","4.":"view_04_stages","5.":"view_05_failed","6.":"view_06_reset","7.":"view_07_product","12.":"view_12_howto","13.":"view_13_crossroads"};
+      var _h2s=document.querySelectorAll('h2');
+      for(var i=0;i<_h2s.length;i++){
+        var _tx=_h2s[i].textContent.trim();
+        for(var p in _h2map){ if(_tx.indexOf(p)===0){ _tgt.push({el:_h2s[i],n:_h2map[p]}); break; } }
+        if(_tx.indexOf("Questions I had")===0) _tgt.push({el:_h2s[i],n:"view_14_faq"});
+      }
+      var _s=document.querySelector('.stories');    if(_s)  _tgt.push({el:_s, n:"view_08_stories"});
+      var _qs=document.querySelector('.quiz-stage'); if(_qs) _tgt.push({el:_qs,n:"view_09_quiz"});
+      var _pd=document.querySelector('.pdp');        if(_pd) _tgt.push({el:_pd,n:"view_10_offer"});
+      var _g=document.querySelector('.guarantee');   if(_g)  _tgt.push({el:_g, n:"view_11_guarantee"});
+      var _ps=document.querySelector('.ps');          if(_ps) _tgt.push({el:_ps,n:"view_15_ps"});
+
+      if(_tgt.length){
+        var _obs=new IntersectionObserver(function(entries){
+          entries.forEach(function(entry){
+            if(!entry.isIntersecting) return;
+            for(var j=0;j<_tgt.length;j++){
+              if(_tgt[j].el===entry.target){ ce(_tgt[j].n); _obs.unobserve(entry.target); break; }
+            }
+          });
+        },{threshold:0.3});
+        for(var k=0;k<_tgt.length;k++) _obs.observe(_tgt[k].el);
+      }
+
+      /* Action tracking */
+      var _bq=document.getElementById('btn-quiz');
+      if(_bq) _bq.addEventListener('click',function(){ try{window.clarity("event","click_btn1_protocol");}catch(e){} });
+
+      var _qb=document.getElementById('quiz-btns'), _qi=0;
+      if(_qb) _qb.addEventListener('click',function(e){
+        if(!e.target.dataset||!e.target.dataset.answer) return;
+        _qi++; try{window.clarity("event","quiz_q"+_qi);}catch(e){}
+      });
+
+      var _qr=document.getElementById('quiz-result');
+      if(_qr){
+        var _mo=new MutationObserver(function(){
+          if(_qr.style.display==='block'){ try{window.clarity("event","quiz_complete");}catch(e){} _mo.disconnect(); }
+        });
+        _mo.observe(_qr,{attributes:true,attributeFilter:['style']});
+      }
+
+      var _pk=document.getElementById('pkg-selector');
+      if(_pk) _pk.addEventListener('change',function(e){ try{window.clarity("event","pkg_select_"+e.target.value);}catch(e){} });
+
+      var _pb=document.getElementById('pdp-btn');
+      if(_pb) _pb.addEventListener('click',function(){ try{window.clarity("event","click_buy_offer");}catch(e){} });
+
+      var _gb=document.querySelector('.guarantee .pdp-buy');
+      if(_gb) _gb.addEventListener('click',function(){ try{window.clarity("event","click_buy_guarantee");}catch(e){} });
+
+      var _cb=document.querySelector('.vsl-cta__button.buylink[data-sentinel-checkout]');
+      if(_cb) _cb.addEventListener('click',function(){ try{window.clarity("event","click_buy_crossroads");}catch(e){} });
+    })();
     </script>
 
     <!-- Meta Pixel -->
