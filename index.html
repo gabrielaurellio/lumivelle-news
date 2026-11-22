@@ -280,7 +280,7 @@
       .pdp { background: #fff; border: 1px solid #e8dde3; border-radius: 14px;
              box-shadow: 0 2px 12px rgba(0,0,0,.06); margin: 0 0 22px; }
       .pdp__inner { display: flex; flex-direction: column; }
-      .pdp__img { position: relative; background: #f7f1f4; display: flex; align-items: center; justify-content: center; padding: 20px; }
+      .pdp__img { position: relative; background: #f7f1f4; display: flex; align-items: center; justify-content: center; padding: 20px; flex: none; width: 100%; }
       .pdp__img img { width: 100%; height: auto; border-radius: 16px; aspect-ratio: 1/1; }
       .pdp__badge { position: absolute; top: 12px; right: 12px; width: 56px; height: 56px; border-radius: 50%;
                     background: #ff3b3b; color: #fff; font-family: var(--font-display); font-weight: 900;
@@ -444,10 +444,10 @@
         .paths { flex-direction: row; }
         .path { flex: 1; }
         .pdp-wrap { max-width: 1120px; }
-        .pdp__inner { flex-direction: row; gap: 40px; }
-        .pdp__img { width: 50%; position: sticky; top: 24px; align-self: start;
+        .pdp__inner { display: flex; align-items: flex-start; gap: 40px; }
+        .pdp__img { flex: 0 0 calc(50% - 20px); position: sticky; top: 24px;
                     border-radius: 16px; }
-        .pdp__content { width: 50%; }
+        .pdp__content { flex: 1 1 0; min-width: 0; }
         .pkg-line { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
         .pkg-line__img { width: 76px; flex-shrink: 0; }
         .pkg-line__info { flex: 1; min-width: 0; }
@@ -897,7 +897,6 @@
                       <div class="pkg-line__was">$149</div>
                     </div>
                     <div class="pkg-line__save">Save $70 &middot; 47% OFF</div>
-                    </div>
                   </label>
                 </div>
                 <!-- C6. Bonus box -->
