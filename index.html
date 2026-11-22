@@ -37,7 +37,6 @@
         --green-hover-top: #0c7536;
         --green-hover-bottom: #0a6a31;
         --line: #efe6ea;
-        --bar-h: 44px;
       }
       *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
       html, body { overflow-x: clip; }
@@ -52,21 +51,6 @@
       .topband { background: #2b1a2b; color: rgba(255,255,255,.7); text-align: center;
                  font-size: 12px; letter-spacing: .08em; text-transform: uppercase;
                  padding: 8px 16px; font-family: var(--font-display); font-weight: 700; }
-
-      /* B. Sticky offer bar */
-      .offerbar { position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-                  height: var(--bar-h); background: #1a0f1a; color: #fff;
-                  display: flex; align-items: center; justify-content: center; gap: 12px;
-                  font-size: 14px; font-family: var(--font-body);
-                  transform: translateY(-100%); transition: transform .3s ease;
-                  box-shadow: 0 2px 8px rgba(0,0,0,.2); }
-      .offerbar.visible { transform: translateY(0); }
-      .offerbar__text { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-      .offerbar__text .short { display: none; }
-      .offerbar__btn { background: var(--green-top); color: #fff; border: 0; border-radius: 6px;
-                       padding: 6px 14px; font-size: 13px; font-weight: 700; cursor: pointer;
-                       white-space: nowrap; font-family: var(--font-body); }
-      .offerbar__btn:hover { background: var(--green-hover-top); }
 
       /* Headline */
       .vsl-headline { padding: 24px 0 10px; text-align: center; }
@@ -187,24 +171,55 @@
       .timeline li:last-child { border-bottom: 0; }
       .timeline b { font-family: var(--font-display); color: var(--plum); font-weight: 900; margin-right: 6px; }
 
-      /* Reviews */
-      .reviews { display: flex; flex-direction: column; gap: 16px; margin: 18px 0 22px; }
-      .review { background: #fbf3f6; border-radius: 10px; padding: 20px; }
-      .review__photo { width: 56px; height: 56px; border-radius: 50%; background: #f6f0f2; overflow: hidden; margin-bottom: 10px; }
-      .review__photo img { width: 100%; height: 100%; object-fit: cover; }
-      .review__stars { color: #f5a623; font-size: 18px; letter-spacing: 2px; margin-bottom: 6px; }
-      .review__title { font-family: var(--font-display); font-weight: 900; font-size: 17px; margin-bottom: 6px; color: #3f2c2c; }
-      .review p { margin: 0 0 8px; }
-      .review p mark { background: #fef3cd; padding: 1px 3px; border-radius: 2px; }
-      .review__name { font-size: 14px; color: #8a7a7a; }
-      .trusted { text-align: center; font-family: var(--font-display); font-weight: 900; color: var(--plum);
-                  font-size: 18px; margin: 10px 0 18px; }
-      .trusted .stars { color: #f5a623; letter-spacing: 2px; }
+      /* Stories section */
+      .stories { margin: 30px 0 0; }
+      .stories__header { text-align: center; margin-bottom: 24px; }
+      .stories__label { font-family: var(--font-display); font-weight: 900; font-size: 12px;
+                        letter-spacing: .1em; text-transform: uppercase; color: var(--plum); margin-bottom: 6px; }
+      .stories__h2 { font-family: var(--font-display); font-weight: 900; font-size: 26px; color: #3f2c2c;
+                     line-height: 1.2; margin: 0 0 8px; }
+      .stories__trusted { font-size: 15px; color: #8a7a7a; }
+      .stories__trusted .stars { color: #f5a623; letter-spacing: 2px; font-size: 18px; }
+
+      /* Strip (sliding squares) */
+      .stories-strip-wrap { width: 100%; overflow: hidden; position: relative; margin-bottom: 28px; }
+      .stories-strip-wrap::before, .stories-strip-wrap::after {
+        content: ""; position: absolute; top: 0; bottom: 0; width: 40px; z-index: 2; pointer-events: none; }
+      .stories-strip-wrap::before { left: 0; background: linear-gradient(90deg, #fff, transparent); }
+      .stories-strip-wrap::after { right: 0; background: linear-gradient(270deg, #fff, transparent); }
+      .stories-strip { display: flex; gap: 12px; animation: stripSlide 40s linear infinite; width: max-content; }
+      .stories-strip:hover { animation-play-state: paused; }
+      @keyframes stripSlide { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+      .strip-sq { width: 150px; height: 150px; border-radius: 14px; flex-shrink: 0; }
+      .strip-sq img { width: 100%; height: 100%; object-fit: cover; border-radius: 14px; }
+      @media(prefers-reduced-motion:reduce){
+        .stories-strip { animation: none; overflow-x: auto; }
+      }
+
+      /* Review carousel (mobile) */
+      .reviews-track { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory;
+                       -webkit-overflow-scrolling: touch; padding: 0 7%; margin: 0 0 12px; }
+      .reviews-track::-webkit-scrollbar { display: none; }
+      .reviews-track { scrollbar-width: none; }
+      .review-card { flex: 0 0 86%; scroll-snap-align: center; background: #fff; border: 1px solid var(--line);
+                     border-radius: 16px; box-shadow: 0 2px 10px rgba(0,0,0,.05); overflow: hidden; }
+      .review-card__photo { width: 100%; aspect-ratio: 1/1; overflow: hidden; }
+      .review-card__photo img { width: 100%; height: 100%; object-fit: cover; }
+      .review-card__body { padding: 16px 18px 18px; }
+      .review-card__stars { color: #0f8340; font-size: 16px; letter-spacing: 2px; margin-bottom: 6px; }
+      .review-card__title { font-family: var(--font-display); font-weight: 900; font-size: 17px; color: #3f2c2c; margin-bottom: 6px; }
+      .review-card__body p { margin: 0 0 10px; font-size: 16px; line-height: 1.5; }
+      .review-card__body p mark { background: #fef3cd; padding: 1px 3px; border-radius: 2px; }
+      .review-card__name { font-weight: 700; font-size: 15px; color: #3f2c2c; }
+      .review-card__verified { font-size: 13px; color: #2a6cb8; }
+      .review-dots { display: flex; justify-content: center; gap: 8px; margin: 0 0 22px; }
+      .review-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--line); border: 0; padding: 0; cursor: pointer; transition: background .2s; }
+      .review-dot--active { background: var(--plum); }
 
       /* Quiz stage */
       .quiz-stage { background: #fbf3f6; min-height: 100vh; min-height: 100svh;
                     display: flex; align-items: center; justify-content: center;
-                    width: 100%; padding: 60px 16px; scroll-margin-top: var(--bar-h); }
+                    width: 100%; padding: 60px 16px; }
       .quiz-stage--done { min-height: 0; padding: 40px 16px; }
       .quiz-inner { width: 100%; max-width: 560px; text-align: center; }
       .quiz__label { font-family: var(--font-display); font-weight: 900; font-size: 12px;
@@ -421,13 +436,16 @@
         .timeline li::before { content: ""; position: absolute; top: -10.5px; left: 0; width: 18px; height: 18px;
                                border-radius: 50%; background: var(--plum); border: 3px solid #fff; box-sizing: border-box; }
         .timeline b { display: block; font-size: 22px; margin: 0 0 6px; }
-        .reviews { flex-direction: row; }
-        .review { flex: 1; }
+        .strip-sq { width: 200px; height: 200px; }
+        .reviews-track { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; overflow: visible;
+                         scroll-snap-type: none; padding: 0; }
+        .review-card { flex: none; }
+        .review-dots { display: none; }
         .paths { flex-direction: row; }
         .path { flex: 1; }
         .pdp-wrap { max-width: 1120px; }
         .pdp__inner { flex-direction: row; gap: 40px; }
-        .pdp__img { width: 50%; position: sticky; top: calc(var(--bar-h) + 24px); align-self: start;
+        .pdp__img { width: 50%; position: sticky; top: 24px; align-self: start;
                     border-radius: 16px; }
         .pdp__content { width: 50%; }
         .pkg-line { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
@@ -448,8 +466,6 @@
         .article h3 { font-size: 19px; }
         .article blockquote { font-size: 19px; }
         .vsl-cta__button { font-size: 20px; padding: 18px 14px; }
-        .offerbar__text .full { display: none; }
-        .offerbar__text .short { display: inline; }
       }
     </style>
   </head>
@@ -457,15 +473,6 @@
   <body>
     <!-- A. Top band -->
     <div class="topband">HEALTHHUB &middot; SPECIAL REPORT &middot; <span class="js-date"></span></div>
-
-    <!-- B. Sticky offer bar (hidden until block 7 is scrolled past) -->
-    <div class="offerbar" id="offerbar" aria-hidden="true">
-      <span class="offerbar__text">
-        <span class="full">Black Friday &middot; 3 bottles for $99 &middot; Free shipping &middot; 90-day guarantee</span>
-        <span class="short">3 bottles for $99 &middot; Free shipping</span>
-      </span>
-      <button class="offerbar__btn" id="offerbar-btn">Check availability &rarr;</button>
-    </div>
 
     <!-- C. Headline -->
     <section class="vsl-headline">
@@ -711,41 +718,74 @@
         <div class="callout">
           <strong>I'll be honest, because nobody was honest with me.</strong> I still have lines. I'm 61, not 30. What I got back is my neck, which stopped looking like crepe paper around week six. My jawline, which my sister noticed before I did. And the pinch on my hand, which snaps back now.
         </div>
-        <p class="trusted"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> Trusted by 28,000+ customers</p>
+      </div>
+    </article>
 
-        <!-- Reviews -->
-        <div class="reviews">
-          <div class="review">
-            <div class="review__photo">
-              <img src="img/review-christina.webp" alt="Christina" width="56" height="56" loading="lazy"
-                   onerror="this.style.display='none'">
+    <!-- Real Stories, Real Results (full-width section) -->
+    <section class="stories">
+      <div class="wrap">
+        <div class="stories__header">
+          <div class="stories__label">REAL STORIES, REAL RESULTS</div>
+          <h2 class="stories__h2">Honest experiences with LumiVelle</h2>
+          <div class="stories__trusted"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> Trusted by 28,000+ customers</div>
+        </div>
+      </div>
+
+      <!-- Strip of sliding squares (full bleed) -->
+      <div class="stories-strip-wrap">
+        <div class="stories-strip" id="stories-strip"></div>
+      </div>
+
+      <!-- Review carousel -->
+      <div class="wrap">
+        <div class="reviews-track" id="reviews-track">
+          <div class="review-card" data-review="0">
+            <div class="review-card__photo">
+              <img src="img/review-christina.webp" alt="Christina" width="600" height="600" loading="lazy">
             </div>
-            <div class="review__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-            <div class="review__title">"My sister asked what I'd done"</div>
-            <p><mark>She hadn't seen me in two months.</mark> I hadn't told anyone I was taking it. When she said my neck looked different, I almost cried. That was week six.</p>
-            <div class="review__name">Christina M. &middot; &#10003; verified buyer</div>
+            <div class="review-card__body">
+              <div class="review-card__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <div class="review-card__title">"My sister asked what I'd done"</div>
+              <p><mark>She hadn't seen me in two months.</mark> I hadn't told anyone I was taking it. When she said my neck looked different, I almost cried. That was week six.</p>
+              <div class="review-card__name">Christina M.</div>
+              <div class="review-card__verified">&#10003; verified buyer</div>
+            </div>
           </div>
-          <div class="review">
-            <div class="review__photo">
-              <img src="img/review-gloria.webp" alt="Gloria" width="56" height="56" loading="lazy"
-                   onerror="this.style.display='none'">
+          <div class="review-card" data-review="1">
+            <div class="review-card__photo">
+              <img src="img/review-gloria.webp" alt="Gloria" width="600" height="600" loading="lazy">
             </div>
-            <div class="review__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-            <div class="review__title">"I stopped wearing turtlenecks"</div>
-            <p>I'm 67. I'd given up. <mark>By month two, my chest didn't look like crepe paper anymore.</mark> My husband noticed before I did.</p>
-            <div class="review__name">Gloria R. &middot; &#10003; verified buyer</div>
+            <div class="review-card__body">
+              <div class="review-card__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <div class="review-card__title">"I stopped wearing turtlenecks"</div>
+              <p>I'm 67. I'd given up. <mark>By month two, my chest didn't look like crepe paper anymore.</mark> My husband noticed before I did.</p>
+              <div class="review-card__name">Gloria R.</div>
+              <div class="review-card__verified">&#10003; verified buyer</div>
+            </div>
           </div>
-          <div class="review">
-            <div class="review__photo">
-              <img src="img/review-susan.webp" alt="Susan" width="56" height="56" loading="lazy"
-                   onerror="this.style.display='none'">
+          <div class="review-card" data-review="2">
+            <div class="review-card__photo">
+              <img src="img/review-susan.webp" alt="Susan" width="600" height="600" loading="lazy">
             </div>
-            <div class="review__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-            <div class="review__title">"The pinch test sold me"</div>
-            <p>I did the pinch test before I ordered. The fold stayed for three seconds. <mark>Four weeks later, it snaps right back.</mark> I wish I'd started sooner.</p>
-            <div class="review__name">Susan T. &middot; &#10003; verified buyer</div>
+            <div class="review-card__body">
+              <div class="review-card__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <div class="review-card__title">"The pinch test sold me"</div>
+              <p>I did the pinch test before I ordered. The fold stayed for three seconds. <mark>Four weeks later, it snaps right back.</mark> I wish I'd started sooner.</p>
+              <div class="review-card__name">Susan T.</div>
+              <div class="review-card__verified">&#10003; verified buyer</div>
+            </div>
           </div>
         </div>
+        <div class="review-dots" id="review-dots">
+          <button class="review-dot review-dot--active" data-idx="0" aria-label="Review 1"></button>
+          <button class="review-dot" data-idx="1" aria-label="Review 2"></button>
+          <button class="review-dot" data-idx="2" aria-label="Review 3"></button>
+        </div>
+      </div>
+    </section>
+
+    <article class="article">
+      <div class="wrap">
 
         <!-- Block 9: Quiz (full-screen stage) -->
       </div>
@@ -1130,29 +1170,51 @@
         }, 200);
       });
 
-      /* -- Offer bar -- */
-      var offerbar = document.getElementById('offerbar');
-      var offerbarBtn = document.getElementById('offerbar-btn');
-      var block7 = document.getElementById('block7-sentinel');
-      var barVisible = false;
-
-      if (block7) {
-        var barObs = new IntersectionObserver(function(entries) {
-          entries.forEach(function(entry) {
-            if (!entry.isIntersecting && entry.boundingClientRect.top < 0) {
-              if (!barVisible) { offerbar.classList.add('visible'); offerbar.setAttribute('aria-hidden', 'false'); barVisible = true; }
-            } else {
-              if (barVisible) { offerbar.classList.remove('visible'); offerbar.setAttribute('aria-hidden', 'true'); barVisible = false; }
-            }
-          });
-        }, { threshold: 0 });
-        barObs.observe(block7);
+      /* -- Stories strip -- */
+      var STRIP = []; // Fill with image paths when ready, e.g. ['img/photo1.webp', ...]
+      var stripEl = document.getElementById('stories-strip');
+      if (stripEl) {
+        var sqHTML = '';
+        if (STRIP.length >= 6) {
+          for (var s = 0; s < STRIP.length; s++)
+            sqHTML += '<div class="strip-sq"><img src="' + STRIP[s] + '" alt="" width="200" height="200" loading="lazy"></div>';
+        } else {
+          var colors = ['#f3e7ee','#ece3f1'];
+          for (var s = 0; s < 8; s++)
+            sqHTML += '<div class="strip-sq" style="background:' + colors[s % 2] + '"></div>';
+        }
+        stripEl.innerHTML = sqHTML + sqHTML; // duplicate for seamless loop
       }
 
-      offerbarBtn.addEventListener('click', function() {
-        var target = quizDone ? offerBlock : quizStage;
-        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
+      /* -- Review carousel dots -- */
+      var track = document.getElementById('reviews-track');
+      var dots = document.querySelectorAll('.review-dot');
+      if (track && dots.length) {
+        var cards = track.querySelectorAll('.review-card');
+        var dotObs = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              var idx = entry.target.dataset.review;
+              for (var d = 0; d < dots.length; d++) {
+                dots[d].classList.toggle('review-dot--active', dots[d].dataset.idx === idx);
+              }
+            }
+          });
+        }, { root: track, threshold: 0.6 });
+        cards.forEach(function(c) { dotObs.observe(c); });
+        for (var d = 0; d < dots.length; d++) {
+          dots[d].addEventListener('click', function() {
+            var c = track.querySelector('[data-review="' + this.dataset.idx + '"]');
+            if (c) c.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+          });
+        }
+        // Touch support: pause strip on touch
+        var strip = document.getElementById('stories-strip');
+        if (strip) {
+          strip.addEventListener('touchstart', function() { strip.style.animationPlayState = 'paused'; }, { passive: true });
+          strip.addEventListener('touchend', function() { strip.style.animationPlayState = 'running'; }, { passive: true });
+        }
+      }
 
       /* -- Package selector -- */
       var pkgData = {
